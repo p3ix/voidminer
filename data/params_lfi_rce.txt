@@ -1,0 +1,13 @@
+file
+path
+template
+include
+page
+module
+load
+view
+config
+cmd
+command
+exec
+shell

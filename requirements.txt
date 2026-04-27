@@ -1,0 +1,8 @@
+beautifulsoup4
+httpx
+lxml
+orjson
+pydantic
+rich
+typer
+pytest
