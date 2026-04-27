@@ -9,3 +9,23 @@
 - [x] Crear JSON report
 - [x] Crear Markdown report
 - [x] Añadir tests
+- [x] Añadir tests de integración pipeline mockeado
+- [x] Añadir resiliencia ante timeouts y errores transitorios
+- [x] Añadir retries con backoff y jitter configurables
+- [x] Añadir soporte Retry-After y métricas de reintentos
+- [x] Añadir métricas operacionales por endpoint
+- [x] Mostrar métricas por endpoint en consola Rich
+- [x] Mejorar diccionarios de parámetros (base + especializados)
+- [x] Deduplicación/normalización de wordlist en runtime
+- [x] Motor multi-payload por parámetro
+- [x] Scoring incremental por consistencia entre payloads
+- [x] Trazabilidad de findings por payload
+- [x] Perfiles y límites de payload en CLI
+- [x] Métricas de payloads en summary/reportes
+- [x] Tests para mega+multi-payload
+- [x] Soportar -w repetible para múltiples wordlists
+- [x] Perfiles operativos de throughput (recon_fast/balanced/deep_confirm)
+- [x] Perfiles de wordlist predefinidos
+- [x] Estrategia opcional de dos fases
+- [x] Métricas de productividad BB y Quick Triage
+- [x] Checkpoints de progreso y hardening de ejecución larga

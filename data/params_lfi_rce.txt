@@ -11,3 +11,16 @@ cmd
 command
 exec
 shell
+dir
+directory
+filepath
+filename
+download
+upload
+locale
+lang
+theme
+renderer
+engine
+plugin
+extension

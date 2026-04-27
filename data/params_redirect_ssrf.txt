@@ -12,6 +12,7 @@ dest
 destination
 target
 proxy
+proxy_url
 callback
 callback_url
 webhook
@@ -23,3 +24,19 @@ link
 host
 domain
 path
+endpoint
+upstream
+origin
+base_url
+resource_url
+dest_url
+to
+goto
+forward
+forward_to
+service
+api
+remote
+fetch
+src
+source

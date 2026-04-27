@@ -20,14 +20,64 @@ def render_markdown_report(report: Report) -> str:
         "## Summary",
         f"- Target URLs tested: {s.target_urls_tested}",
         f"- Parameters tested: {s.parameters_tested}",
+        f"- Payloads executed: {s.payloads_executed}",
+        f"- Signals detected: {s.signals_detected}",
+        f"- Signal ratio: {s.signal_ratio:.3f}",
+        f"- Multi-payload confirmed findings: {s.findings_confirmed_multi_payload}",
+        f"- Request errors: {s.request_errors}",
+        f"- Retry attempts: {s.retry_attempts}",
+        f"- Elapsed seconds: {s.elapsed_seconds:.2f}",
+        f"- Findings per minute: {s.findings_per_minute:.2f}",
+        f"- Parameters per minute: {s.parameters_per_minute:.2f}",
+        f"- Time to first finding (s): {s.time_to_first_finding_s:.2f}",
+        f"- Phase1 candidates: {s.phase1_candidates}",
+        f"- Confirmed findings: {s.confirmed_findings}",
+        f"- Candidate->confirmed ratio: {s.candidates_to_confirmed_ratio:.3f}",
         f"- Findings: {s.findings}",
         f"- High: {s.high}",
         f"- Medium: {s.medium}",
         f"- Low: {s.low}",
         "",
-        "## Findings",
+        "## Endpoint Metrics",
         "",
     ]
+
+    for endpoint_summary in report.endpoints:
+        lines.extend(
+            [
+                f"### `{endpoint_summary.endpoint}`",
+                f"- Parameters tested: {endpoint_summary.parameters_tested}",
+                f"- Payloads executed: {endpoint_summary.payloads_executed}",
+                f"- Signals detected: {endpoint_summary.signals_detected}",
+                f"- Request errors: {endpoint_summary.request_errors}",
+                f"- Retry attempts: {endpoint_summary.retry_attempts}",
+                f"- Findings: {endpoint_summary.findings}",
+                f"- High: {endpoint_summary.high}",
+                f"- Medium: {endpoint_summary.medium}",
+                f"- Low: {endpoint_summary.low}",
+                "",
+            ]
+        )
+
+    lines.extend(
+        [
+            "## Quick Triage",
+            "",
+        ]
+    )
+    top_findings = sorted(report.findings, key=lambda f: f.score, reverse=True)[:10]
+    if not top_findings:
+        lines.append("- No findings")
+    else:
+        for finding in top_findings:
+            lines.append(f"- [{finding.confidence.value}] {finding.endpoint} :: {finding.parameter} (score={finding.score})")
+    lines.extend(
+        [
+            "",
+            "## Findings",
+            "",
+        ]
+    )
 
     for finding in report.findings:
         lines.extend(
@@ -42,6 +92,12 @@ def render_markdown_report(report: Report) -> str:
                 "",
                 "Payload:",
                 f"`{finding.payload}`",
+                "",
+                "Payload execution:",
+                f"- Payloads tested: {', '.join(finding.payloads_tested)}",
+                f"- Payloads with signal: {', '.join(finding.payloads_with_signal) if finding.payloads_with_signal else '-'}",
+                f"- Payloads executed: {finding.payloads_executed}",
+                f"- Signal hits: {finding.signal_hits}",
                 "",
                 "Evidence:",
                 f"- Status changed: {finding.evidence.status_changed}",

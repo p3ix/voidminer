@@ -51,9 +51,14 @@ class Finding(BaseModel):
     parameter: str
     location: Location
     payload: str
+    payloads_tested: list[str] = Field(default_factory=list)
+    payloads_with_signal: list[str] = Field(default_factory=list)
+    payloads_executed: int = 0
+    signal_hits: int = 0
     confidence: Confidence
     score: int
     evidence: Evidence
+    evidence_by_payload: dict[str, Evidence] = Field(default_factory=dict)
     request: RequestSnapshot
     response: ResponseSnapshot
 
@@ -83,6 +88,32 @@ class DiffResult(BaseModel):
 class ScanSummary(BaseModel):
     target_urls_tested: int = 0
     parameters_tested: int = 0
+    payloads_executed: int = 0
+    signals_detected: int = 0
+    signal_ratio: float = 0.0
+    findings_confirmed_multi_payload: int = 0
+    request_errors: int = 0
+    retry_attempts: int = 0
+    elapsed_seconds: float = 0.0
+    findings_per_minute: float = 0.0
+    parameters_per_minute: float = 0.0
+    time_to_first_finding_s: float = 0.0
+    phase1_candidates: int = 0
+    confirmed_findings: int = 0
+    candidates_to_confirmed_ratio: float = 0.0
+    findings: int = 0
+    high: int = 0
+    medium: int = 0
+    low: int = 0
+
+
+class EndpointSummary(BaseModel):
+    endpoint: str
+    parameters_tested: int = 0
+    payloads_executed: int = 0
+    signals_detected: int = 0
+    request_errors: int = 0
+    retry_attempts: int = 0
     findings: int = 0
     high: int = 0
     medium: int = 0
@@ -91,4 +122,5 @@ class ScanSummary(BaseModel):
 
 class Report(BaseModel):
     summary: ScanSummary
+    endpoints: list[EndpointSummary] = Field(default_factory=list)
     findings: list[Finding] = Field(default_factory=list)
